@@ -1,0 +1,27 @@
+{
+  "name": "magiread",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./index.js",
+  "bin": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slippi/slippi-js": "^6.5.0",
+    "chokidar": "^3.5.3",
+    "lodash": "^4.17.21",
+    "log-update": "^5.0.1"
+  },
+  "pkg": {
+    "scripts": [],
+    "assets": [],
+    "targets": [
+      "latest-win"
+    ]
+  }
+}
