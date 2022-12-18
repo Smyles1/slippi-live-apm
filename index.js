@@ -1,3 +1,8 @@
+// ATTRIBUTIONS:
+// Most of this code is from https://github.com/project-slippi/slippi-js/blob/master/examples/realtimeFileReads.js
+// They use an open source license so I think its fine to do this but basically all creadit goes to them
+
+
 const { SlippiGame } = require("@slippi/slippi-js");
 const chokidar = require("chokidar");
 const _ = require("lodash");
@@ -28,11 +33,11 @@ fs.readFile(path.dirname(process.execPath) + path.sep + 'options.txt', 'utf8', (
     logUpdate(`Waiting for game...`);
 
     const watcher = chokidar.watch(listenPath, {
-    ignored: "!*.slp", // TODO: This doesn't work. Use regex?
-    depth: 0,
-    persistent: true,
-    usePolling: true,
-    ignoreInitial: true,
+        ignored: "!*.slp",
+        depth: 0,
+        persistent: true,
+        usePolling: true,
+        ignoreInitial: true,
     });
 
     const gameByPath = {};
@@ -43,7 +48,6 @@ fs.readFile(path.dirname(process.execPath) + path.sep + 'options.txt', 'utf8', (
         game = _.get(gameByPath, [path, "game"]);
         if (!game) {
         logUpdate(`New file at: ${path}`);
-        // Make sure to enable `processOnTheFly` to get updated stats as the game progresses
         game = new SlippiGame(path, { processOnTheFly: true });
         gameByPath[path] = {
             game: game,
@@ -75,32 +79,6 @@ fs.readFile(path.dirname(process.execPath) + path.sep + 'options.txt', 'utf8', (
             }
         });
     }
-    
-
-    // Uncomment this if you uncomment the stats calculation above. See comment above for details
-    // // Do some conversion detection logging
-    // // logUpdate(stats);
-    // _.forEach(stats.conversions, conversion => {
-    //   const key = `${conversion.playerIndex}-${conversion.startFrame}`;
-    //   const detected = _.get(gameState, ['detectedPunishes', key]);
-    //   if (!detected) {
-    //     logUpdate(`[Punish Start] Frame ${conversion.startFrame} by player ${conversion.playerIndex + 1}`);
-    //     gameState.detectedPunishes[key] = conversion;
-    //     return;
-    //   }
-
-    //   // If punish was detected previously, but just ended, let's output that
-    //   if (!detected.endFrame && conversion.endFrame) {
-    //     const dmg = conversion.endPercent - conversion.startPercent;
-    //     const dur = conversion.endFrame - conversion.startFrame;
-    //     logUpdate(
-    //       `[Punish End] Player ${conversion.playerIndex + 1}'s punish did ${dmg} damage ` +
-    //       `with ${conversion.moves.length} moves over ${dur} frames`
-    //     );
-    //   }
-
-    //   gameState.detectedPunishes[key] = conversion;
-    // });
 
     if (gameEnd) {
         // NOTE: These values and the quitter index will not work until 2.0.0 recording code is
